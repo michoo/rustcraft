@@ -1,4 +1,6 @@
 use crate::init::ServerTime;
+use std::collections::HashMap;
+
 use bevy::prelude::*;
 use ron::ser::PrettyConfig;
 use shared::world::get_game_folder;
@@ -14,9 +16,10 @@ use crate::world::data::SAVE_PATH;
 
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct WorldData {
+    pub time: u64,
+    pub player_positions: HashMap<String, Vec3>,
     pub seed: WorldSeed,
     pub map: ServerWorldMap,
-    pub time: u64,
 }
 
 // System to save the world when "L" is pressed
@@ -35,10 +38,19 @@ pub fn save_world_system(
 
     // If a save was requested by the user
     if save_requested {
+        // Traduire les client_id en pseudonymes pour sauvegarder les positions
+        let mut player_positions = HashMap::new();
+        for (client_id, position) in &world_map.player_positions {
+            if let Some(username) = lobby.players.get(client_id) {
+                player_positions.insert(username.clone(), *position);
+            }
+        }
+
         let world_data = WorldData {
             map: world_map.clone(),
             seed: world_seed.clone(),
             time: time.0,
+            player_positions
         };
 
         // define save file path

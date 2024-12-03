@@ -112,10 +112,23 @@ fn server_update_system(
                         .insert(client_id.raw(), auth_req.username.clone());
                     debug!("New lobby : {:?}", lobby);
 
+                    // Déterminer la position de spawn du joueur
+                    let spawn_position = world_map
+                        .player_positions
+                        .get(&auth_req.username)
+                        .cloned() // Utiliser la position sauvegardée si elle existe
+                        .unwrap_or_else(|| Vec3::new(0.0, 80.0, 0.0)); // Sinon, une position par défaut
+
+                    // Ajouter la position dans le ServerWorldMap
+                    world_map
+                        .player_positions
+                        .entry(auth_req.username.clone())
+                        .or_insert(spawn_position);
+
                     let spawn_message = PlayerSpawnEvent {
                         id: client_id.raw(),
                         name: auth_req.username,
-                        position: Vec3::new(0.0, 80.0, 0.0),
+                        position: spawn_position,
                     };
 
                     // TODO: add cleanup system if no heartbeat

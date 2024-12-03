@@ -121,6 +121,8 @@ pub fn init(socket: UdpSocket, config: GameServerConfig, game_folder_path: Strin
     app.insert_resource(world_map);
     app.insert_resource(world_seed);
     app.insert_resource(ServerTime(server_time));
+    app.insert_resource(UsernameToPlayerIdMap::default());
+
 
     dispatcher::register_systems(&mut app);
 

@@ -5,15 +5,18 @@ use shared::world::get_game_folder;
 use shared::GameFolderPaths;
 use std::fs;
 use std::path::Path;
+use std::collections::HashMap;
+
 
 use crate::world::data::SAVE_PATH;
 use std::path::PathBuf;
 
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct WorldData {
+    pub time: u64,
+    pub player_positions: HashMap<String, Vec3>,
     pub seed: WorldSeed,
     pub map: ServerWorldMap,
-    pub time: u64,
 }
 
 /// Charge les données combinées (carte et graine) d'un fichier
@@ -43,6 +46,7 @@ pub fn load_world_data(
             },
             seed: WorldSeed(rand::random::<u32>()),
             time: 0,
+            player_positions: HashMap::new(),
         });
     }
 
