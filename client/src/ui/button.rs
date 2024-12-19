@@ -66,7 +66,8 @@ pub fn button_system(
         // Get button real size
         let width = match style.width {
             Val::Px(width) => width,
-            _ => node.size().x,
+            // _ => node.size().x,
+            _ => 42.0,
         };
 
         // Charger les images appropriées en fonction de la largeur

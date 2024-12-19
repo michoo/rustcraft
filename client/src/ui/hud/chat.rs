@@ -174,12 +174,12 @@ pub fn render_chat(
             commands.entity(entity).remove::<MessageAnimator>();
             *vis = Visibility::Inherited;
             *bg = BackgroundColor(Color::BLACK.with_alpha(0.));
-            text.sections[0].style.color = Color::WHITE;
+            // text.sections[0].style.color = Color::WHITE;
         } else if diff > ANIMATION_BEGIN_FADE {
             // Animate linear fade
             let alpha = 1. - ((diff - ANIMATION_BEGIN_FADE) as f32 / ANIMATION_HIDE as f32);
             *bg = BackgroundColor(CHAT_COLOR.with_alpha(0.6 * alpha));
-            text.sections[0].style.color = Color::WHITE.with_alpha(alpha);
+            // text.sections[0].style.color = Color::WHITE.with_alpha(alpha);
         }
     }
 
