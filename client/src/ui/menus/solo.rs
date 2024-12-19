@@ -9,21 +9,17 @@ use bevy::{
     asset::AssetServer,
     color::Color,
     prelude::{
-        BuildChildren, Button, ButtonBundle, Changed, Commands, Component, DespawnRecursiveExt,
-        Entity, EventWriter, ImageBundle, NextState, NodeBundle, Query, Res, ResMut, StateScoped,
-        Text, TextBundle, With,
+        BuildChildren, Button, Changed, Commands, Component, DespawnRecursiveExt, Entity,
+        EventWriter, NextState, Query, Res, ResMut, StateScoped, Text, With,
     },
-    text::{TextSection, TextStyle},
     ui::{
         AlignContent, AlignItems, BackgroundColor, BorderColor, Display, FlexDirection,
-        GridPlacement, GridTrack, Interaction, JustifyContent, Node, Overflow, UiImage, UiRect,
-        Val,
+        GridPlacement, GridTrack, Interaction, JustifyContent, Node, Overflow, UiRect, Val,
     },
     utils::hashbrown::HashMap,
 };
 use bevy_simple_text_input::{
-    TextInputBundle, TextInputInactive, TextInputPlaceholder, TextInputSettings,
-    TextInputTextStyle, TextInputValue,
+    TextInputInactive, TextInputPlaceholder, TextInputSettings, TextInputValue,
 };
 use shared::world::get_game_folder;
 use shared::GameFolderPaths;
@@ -66,17 +62,21 @@ pub fn solo_menu_setup(
     let font = load_font(&assets_server);
     let button_background_image = load_button_background_large_image(&assets_server);
 
-    let txt_style = TextStyle {
+    let txt_font = TextFont {
         font: font.clone(),
         font_size: 20.,
-        color: Color::WHITE,
+        ..default()
     };
 
-    let txt_style_inactive = TextStyle {
+    let txt_color = TextColor(Color::WHITE);
+
+    let txt_font_inactive = TextFont {
         font,
         font_size: 20.,
-        color: Color::srgb(0.3, 0.3, 0.3),
+        ..default()
     };
+
+    let txt_color_inactive = TextColor(Color::srgb(0.3, 0.3, 0.3));
 
     let btn_style = Node {
         display: Display::Flex,
@@ -101,20 +101,21 @@ pub fn solo_menu_setup(
                 row_gap: Val::Percent(2.),
                 ..Default::default()
             },),
-            UiImage::new(background_image),
+            ImageNode::new(background_image),
         ))
         .with_children(|root| {
-            root.spawn(TextBundle {
-                text: Text::from_section("World list", txt_style.clone()),
-                style: Node {
+            root.spawn((
+                Text::new("World list"),
+                txt_color,
+                txt_font,
+                Node {
                     border: UiRect::all(Val::Px(1.)),
                     flex_direction: FlexDirection::Column,
                     align_content: AlignContent::Center,
                     display: Display::Flex,
                     ..default()
                 },
-                ..default()
-            });
+            ));
 
             root.spawn((
                 Node {
@@ -195,7 +196,11 @@ pub fn solo_menu_setup(
                             MultiplayerButtonAction::Add,
                         ))
                         .with_children(|btn| {
-                            btn.spawn((Text::new("Create world"), txt_style.clone()));
+                            btn.spawn((
+                                Text::new("Create world"),
+                                txt_font.clone(),
+                                txt_color.clone(),
+                            ));
                         });
 
                     wrapper
@@ -214,10 +219,11 @@ pub fn solo_menu_setup(
                             MenuButtonAction::BackToMainMenu,
                         ))
                         .with_children(|btn| {
-                            btn.spawn(TextBundle {
-                                text: Text::from_section("Back to menu", txt_style.clone()),
-                                ..default()
-                            });
+                            btn.spawn((
+                                Text::new("Back to menu"),
+                                txt_font.clone(),
+                                txt_color.clone(),
+                            ));
                         });
                 });
         });
