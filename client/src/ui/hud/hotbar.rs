@@ -72,10 +72,10 @@ pub fn setup_hotbar(
                 .with_children(|btn| {
                     btn.spawn((
                         Text::new("Test"),
-                        // TextStyle {
-                        //     font_size: 15.,
-                        //     ..default()
-                        // },
+                        TextFont {
+                            font_size: 15.,
+                            ..default()
+                        },
                         Node {
                             position_type: PositionType::Absolute,
                             ..default()

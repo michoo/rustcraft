@@ -309,20 +309,22 @@ pub fn add_server_item(
         .spawn((
             (
                 Text::new(format!("{}\n", name)),
-                // style: TextStyle {
-                //     font: asset_server.load("./fonts/RustCraftRegular-Bmg3.otf"),
-                //     font_size: 20.,
-                //     color: Color::WHITE,
-                // },
+                TextFont {
+                    font: asset_server.load("./fonts/RustCraftRegular-Bmg3.otf"),
+                    font_size: 20.,
+                    ..default()
+                },
+                TextColor(Color::WHITE),
             ),
-            // (TextSection
-            (Text::new(ip.clone())),
-            //     style: TextStyle {
-            //         font: asset_server.load("./fonts/RustCraftRegular-Bmg3.otf"),
-            //         font_size: 15.,
-            //         color: Color::srgb(0.4, 0.4, 0.4),
-            //     },
-            // ),
+            (
+                Text::new(ip.clone()),
+                TextFont {
+                    font: asset_server.load("./fonts/RustCraftRegular-Bmg3.otf"),
+                    font_size: 15.,
+                    ..default()
+                },
+                TextColor(Color::srgb(0.4, 0.4, 0.4)),
+            ),
             (Node {
                 display: Display::Flex,
                 flex_direction: FlexDirection::Column,

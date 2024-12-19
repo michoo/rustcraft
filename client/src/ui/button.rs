@@ -49,7 +49,7 @@ pub fn button_system(
             &mut BackgroundColor,
             Option<&SelectedOption>,
             &Node,
-            &Node,
+            &ComputedNode,
         ),
         With<Button>,
     >,
@@ -66,8 +66,7 @@ pub fn button_system(
         // Get button real size
         let width = match style.width {
             Val::Px(width) => width,
-            // _ => node.size().x,
-            _ => 42.0,
+            _ => node.size().x,
         };
 
         // Charger les images appropriées en fonction de la largeur

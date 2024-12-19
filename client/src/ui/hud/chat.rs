@@ -94,11 +94,12 @@ pub fn setup_chat(
                         value: "Send a message...".to_string(),
                         ..default()
                     },
-                    // TextInputTextStyle(TextStyle {
-                    //     font: asset_server.load("./fonts/RustCraftRegular-Bmg3.otf"),
-                    //     font_size: 17.,
-                    //     color: Color::WHITE,
-                    // }),
+                    TextInputTextFont(TextFont {
+                        font: asset_server.load("./fonts/RustCraftRegular-Bmg3.otf"),
+                        font_size: 17.,
+                        ..default()
+                    }),
+                    TextInputTextColor(TextColor(Color::WHITE)),
                     TextInputInactive(true),
                 ),
             ));
@@ -202,11 +203,12 @@ pub fn render_chat(
                     },
                     (
                         Text::new(format!("<{}> : {}", message.author_name, message.content)),
-                        // TextStyle {
-                        //     font: asset_server.load("./fonts/RustCraftRegular-Bmg3.otf"),
-                        //     font_size: 17.,
-                        //     color: Color::WHITE,
-                        // },
+                        TextFont {
+                            font: asset_server.load("./fonts/RustCraftRegular-Bmg3.otf"),
+                            font_size: 17.,
+                            ..default()
+                        },
+                        TextColor(Color::WHITE),
                         Visibility::Visible,
                         BackgroundColor(CHAT_COLOR),
                     ),

@@ -18,6 +18,8 @@ use bevy::{
     },
     utils::hashbrown::HashMap,
 };
+use bevy_simple_text_input::TextInputTextColor;
+use bevy_simple_text_input::TextInputTextFont;
 use bevy_simple_text_input::{
     TextInputInactive, TextInputPlaceholder, TextInputSettings, TextInputValue,
 };
@@ -176,7 +178,8 @@ pub fn solo_menu_setup(
                                 ..default()
                             },
                             TextInputInactive(true),
-                            // TextInputTextStyle(txt_style.clone()),
+                            TextInputTextFont(txt_font.clone()),
+                            TextInputTextColor(txt_color.clone()),
                         ),
                     ));
 
@@ -340,11 +343,12 @@ fn add_world_item(
         .spawn((
             (
                 Text::new(format!("{}\n", name)),
-                // style: TextStyle {
-                //     font: asset_server.load("./fonts/RustCraftRegular-Bmg3.otf"),
-                //     font_size: 20.,
-                //     color: Color::WHITE,
-                // },
+                TextFont {
+                    font: asset_server.load("./fonts/RustCraftRegular-Bmg3.otf"),
+                    font_size: 20.,
+                    ..default()
+                },
+                TextColor(Color::WHITE),
             ),
             Node {
                 display: Display::Flex,

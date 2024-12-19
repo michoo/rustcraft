@@ -49,25 +49,25 @@ pub fn setup_hud(mut commands: Commands) {
             (
                 (
                     Text::new("FPS: "),
-                    // style: TextStyle {
-                    //     font_size: 16.0,
-                    //     color: Color::WHITE,
-                    //     // if you want to use your game's font asset,
-                    //     // uncomment this and provide the handle:
-                    //     // font: my_font_handle
-                    //     ..default()
-                    // },
+                    TextFont {
+                        font_size: 16.0,
+                        // if you want to use your game's font asset,
+                        // uncomment this and provide the handle:
+                        // font: my_font_handle
+                        ..default()
+                    },
+                    TextColor(Color::WHITE),
                 ),
                 (
                     Text::new(" N/A"),
-                    // style: TextStyle {
-                    //     font_size: 16.0,
-                    //     color: Color::WHITE,
-                    //     // if you want to use your game's font asset,
-                    //     // uncomment this and provide the handle:
-                    //     // font: my_font_handle
-                    //     ..default()
-                    // },
+                    TextFont {
+                        font_size: 16.0,
+                        // if you want to use your game's font asset,
+                        // uncomment this and provide the handle:
+                        // font: my_font_handle
+                        ..default()
+                    },
+                    TextColor(Color::WHITE),
                 ),
                 TextColor(Color::WHITE),
             ),
@@ -81,18 +81,18 @@ pub fn setup_hud(mut commands: Commands) {
             (
                 (
                     Text::new("Selected block : "),
-                    // style: TextStyle {
-                    //     font_size: 16.0,
-                    //     ..default()
-                    // },
+                    TextFont {
+                        font_size: 16.0,
+                        ..default()
+                    },
                 ),
                 (
                     Text::new("<None>"),
-                    // style: TextStyle {
-                    //     font_size: 16.0,
-                    //     color: Color::srgb(0.2, 0.2, 0.2),
-                    //     ..default()
-                    // },
+                    TextFont {
+                        font_size: 16.0,
+                        ..default()
+                    },
+                    TextColor(Color::srgb(0.2, 0.2, 0.2)),
                 ),
                 TextColor(Color::srgb(0.2, 0.2, 0.2)),
             ),
