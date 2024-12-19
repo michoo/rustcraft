@@ -53,11 +53,10 @@ fn update_chunk(
         let new_entity = commands
             .spawn((
                 StateScoped(GameState::Game),
-                (
-                    Mesh3d(meshes.add(new_mesh)),
-                    MeshMaterial3d(texture.clone()),
-                    GlobalTransform::from(chunk_t),
-                ),
+                Mesh3d(meshes.add(new_mesh)),
+                MeshMaterial3d(texture.clone()),
+                GlobalTransform::from(chunk_t),
+                Transform::from(chunk_t),
                 RaycastMesh::<BlockRaycastSet>::default(),
             ))
             .id();

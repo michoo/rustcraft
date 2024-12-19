@@ -91,6 +91,7 @@ pub fn spawn_player(
         info!("Spawning new player object: {}", player.id);
 
         let mut entity = commands.spawn((
+            StateScoped(GameState::Game),
             Transform::from_translation(spawn_coords),
             Visibility::default(),
             Mesh3d(meshes.add(Mesh::from(Cuboid::new(
