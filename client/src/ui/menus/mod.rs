@@ -99,7 +99,7 @@ fn menu_action(
 
 pub fn mouse_scroll(
     mut mouse_wheel_events: EventReader<MouseWheel>,
-    mut query_list: Query<(&mut ScrollingList, &mut Style, &Parent, &Node)>,
+    mut query_list: Query<(&mut ScrollingList, &mut Node, &Parent, &Node)>,
     query_node: Query<&Node>,
 ) {
     for mouse_wheel_event in mouse_wheel_events.read() {

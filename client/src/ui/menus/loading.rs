@@ -26,7 +26,7 @@ pub fn load_loading_screen(mut commands: Commands) {
             StateScoped(GameState::PreGameLoading),
             NodeBundle {
                 background_color: BackgroundColor(Color::BLACK),
-                style: Style {
+                style: Node {
                     height: Val::Percent(100.0),
                     width: Val::Percent(100.0),
                     justify_content: JustifyContent::Center,

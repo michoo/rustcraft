@@ -48,7 +48,7 @@ pub fn button_system(
             &mut UiImage,
             &mut BackgroundColor,
             Option<&SelectedOption>,
-            &Style,
+            &Node,
             &Node,
         ),
         With<Button>,

@@ -37,7 +37,7 @@ pub fn setup_inventory(
                 // Z-index of 2 : displayed above game & HUD, but under everything else
                 z_index: ZIndex::Global(2),
                 visibility: Visibility::Hidden,
-                style: Style {
+                style: Node {
                     position_type: PositionType::Absolute,
                     // Cover whole screen as a dark backdrop
                     left: Val::Percent(0.),
@@ -62,7 +62,7 @@ pub fn setup_inventory(
             NodeBundle {
                 background_color: BackgroundColor(Color::srgb(0.4, 0.4, 0.4)),
                 border_radius: BorderRadius::all(Val::Percent(10.)),
-                style: Style {
+                style: Node {
                     display: Display::Flex,
                     flex_direction: FlexDirection::Column,
                     padding: UiRect::all(Val::Percent(7.)),
@@ -82,7 +82,7 @@ pub fn setup_inventory(
                     ..Default::default()
                 },
             ),
-            style: Style {
+            style: Node {
                 align_content: AlignContent::Center,
                 ..Default::default()
             },
@@ -92,7 +92,7 @@ pub fn setup_inventory(
 
     let inventory_grid = commands
         .spawn(NodeBundle {
-            style: Style {
+            style: Node {
                 display: Display::Grid,
                 grid_template_columns: RepeatedGridTrack::auto(9),
                 margin: UiRect::all(Val::Px(10.)),
@@ -110,7 +110,7 @@ pub fn setup_inventory(
                         ButtonBundle {
                             border_color: BorderColor(Color::srgb(0.3, 0.3, 0.3)),
                             focus_policy: FocusPolicy::Block,
-                            style: Style {
+                            style: Node {
                                 width: Val::Px(HOTBAR_CELL_SIZE),
                                 height: Val::Px(HOTBAR_CELL_SIZE),
                                 margin: UiRect::ZERO,
@@ -131,7 +131,7 @@ pub fn setup_inventory(
                                     ..Default::default()
                                 },
                             ),
-                            style: Style {
+                            style: Node {
                                 position_type: PositionType::Absolute,
                                 ..Default::default()
                             },
@@ -140,7 +140,7 @@ pub fn setup_inventory(
                         btn.spawn((
                             ImageBundle {
                                 z_index: ZIndex::Local(-1),
-                                style: Style {
+                                style: Node {
                                     width: Val::Px(
                                         HOTBAR_CELL_SIZE - 2. * (HOTBAR_PADDING + HOTBAR_BORDER),
                                     ),
@@ -165,7 +165,7 @@ pub fn setup_inventory(
             FloatingStack { items: None },
             NodeBundle {
                 focus_policy: FocusPolicy::Pass,
-                style: Style {
+                style: Node {
                     width: Val::Px(20.),
                     height: Val::Px(20.),
                     position_type: PositionType::Absolute,
@@ -185,7 +185,7 @@ pub fn setup_inventory(
             btn.spawn((
                 ImageBundle {
                     z_index: ZIndex::Local(-1),
-                    style: Style {
+                    style: Node {
                         position_type: PositionType::Absolute,
                         left: Val::Percent(0.),
                         right: Val::Percent(0.),

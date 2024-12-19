@@ -136,7 +136,7 @@ pub fn update_celestial_bodies(
         // from multiple threads simultaneously.
 
         // Update local time with delta_seconds
-        LOCAL_TIME += time.delta_seconds();
+        LOCAL_TIME += time.delta_secs();
 
         // Synchronize with the server time every second
         if LOCAL_TIME - LAST_SYNC >= 1.0 {

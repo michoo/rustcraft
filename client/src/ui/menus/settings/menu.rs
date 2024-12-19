@@ -4,7 +4,7 @@ use crate::{ui::assets::load_background_image, TEXT_COLOR};
 use bevy::{
     asset::AssetServer,
     prelude::{BuildChildren, ButtonBundle, Commands, NodeBundle, Res, StateScoped, TextBundle},
-    ui::{AlignItems, FlexDirection, JustifyContent, Style, UiImage, UiRect, Val},
+    ui::{AlignItems, FlexDirection, JustifyContent, Node, UiImage, UiRect, Val},
 };
 
 use crate::menus::{MenuButtonAction, MenuState};
@@ -13,7 +13,7 @@ pub fn settings_menu_setup(mut commands: Commands, asset_server: Res<AssetServer
     let background_image = load_background_image(&asset_server);
     let font = load_font(&asset_server);
 
-    let button_style = Style {
+    let button_style = Node {
         width: Val::Px(400.0),
         height: Val::Px(60.0),
         margin: UiRect::all(Val::Px(20.0)),
@@ -27,7 +27,7 @@ pub fn settings_menu_setup(mut commands: Commands, asset_server: Res<AssetServer
     commands
         .spawn((
             NodeBundle {
-                style: Style {
+                style: Node {
                     width: Val::Percent(100.0),
                     height: Val::Percent(100.0),
                     align_items: AlignItems::Center,
@@ -42,7 +42,7 @@ pub fn settings_menu_setup(mut commands: Commands, asset_server: Res<AssetServer
         .with_children(|parent| {
             parent
                 .spawn(NodeBundle {
-                    style: Style {
+                    style: Node {
                         flex_direction: FlexDirection::Column,
                         align_items: AlignItems::Center,
                         ..Default::default()

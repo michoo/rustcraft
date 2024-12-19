@@ -44,7 +44,7 @@ pub fn setup_chat(
             NodeBundle {
                 background_color: BackgroundColor(CHAT_COLOR),
                 visibility: Visibility::Hidden,
-                style: Style {
+                style: Node {
                     display: Display::Flex,
                     position_type: PositionType::Absolute,
                     bottom: Val::Px(0.),
@@ -66,7 +66,7 @@ pub fn setup_chat(
             root.spawn((
                 ChatDisplay,
                 NodeBundle {
-                    style: Style {
+                    style: Node {
                         display: Display::Flex,
                         flex_direction: FlexDirection::Column,
                         justify_content: JustifyContent::End,
@@ -90,7 +90,7 @@ pub fn setup_chat(
             root.spawn((
                 ChatInput,
                 NodeBundle {
-                    style: Style {
+                    style: Node {
                         width: Val::Percent(100.),
                         ..Default::default()
                     },

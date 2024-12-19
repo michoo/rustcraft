@@ -24,7 +24,7 @@ pub fn setup_hud(mut commands: Commands) {
                 // make it "always on top" by setting the Z index to maximum
                 // we want it to be displayed over all other UI
                 z_index: ZIndex::Global(i32::MAX),
-                style: Style {
+                style: Node {
                     position_type: PositionType::Absolute,
                     // position it at the top-left corner
                     // 1% away from the top window edge

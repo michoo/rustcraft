@@ -24,7 +24,7 @@ fn splash_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands
         .spawn((
             NodeBundle {
-                style: Style {
+                style: Node {
                     align_items: AlignItems::Center,
                     justify_content: JustifyContent::Center,
                     width: Val::Percent(100.0),
@@ -37,7 +37,7 @@ fn splash_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         ))
         .with_children(|parent| {
             parent.spawn(ImageBundle {
-                style: Style {
+                style: Node {
                     // This will set the logo to be 200px wide, and auto adjust its height
                     width: Val::Px(200.0),
                     ..default()

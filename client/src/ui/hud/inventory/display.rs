@@ -13,7 +13,7 @@ use bevy::input::mouse::{MouseScrollUnit, MouseWheel};
 use bevy::input::ButtonInput;
 use bevy::log::debug;
 use bevy::prelude::{
-    EventReader, KeyCode, MouseButton, Query, Res, ResMut, Style, Text, Val, Visibility, Window,
+    EventReader, KeyCode, MouseButton, Node, Query, Res, ResMut, Text, Val, Visibility, Window,
     With, Without,
 };
 use bevy::sprite::TextureAtlas;
@@ -33,7 +33,7 @@ pub fn render_inventory_hotbar(
     ): (
         Query<&mut Text>,
         Query<(&mut TextureAtlas, &mut Visibility), Without<InventoryRoot>>,
-        Query<(&mut Style, &mut FloatingStack, &Children), With<FloatingStack>>,
+        Query<(&mut Node, &mut FloatingStack, &Children), With<FloatingStack>>,
         Query<(&Interaction, &mut BorderColor, &InventoryCell, &Children), With<InventoryCell>>,
         Query<&mut Visibility, With<InventoryRoot>>,
         Query<&Window, With<PrimaryWindow>>,

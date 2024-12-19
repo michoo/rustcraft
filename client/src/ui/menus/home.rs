@@ -33,7 +33,7 @@ pub fn home_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
             let image_height = image_width / aspect_ratio;
 
             parent.spawn(ImageBundle {
-                style: Style {
+                style: Node {
                     margin: UiRect::bottom(Val::Px(120.0)), // Add space below the title image
                     width: Val::Px(image_width),
                     height: Val::Px(image_height),

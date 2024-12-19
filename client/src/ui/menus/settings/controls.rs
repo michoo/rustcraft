@@ -10,7 +10,7 @@ use bevy::{
     text::{Font, Text, TextStyle},
     ui::{
         AlignItems, BackgroundColor, BorderColor, BorderRadius, Display, FlexDirection,
-        FocusPolicy, Interaction, JustifyContent, Overflow, PositionType, RepeatedGridTrack, Style,
+        FocusPolicy, Interaction, JustifyContent, Node, Overflow, PositionType, RepeatedGridTrack,
         UiImage, UiRect, Val, ZIndex,
     },
 };
@@ -49,7 +49,7 @@ pub fn controls_menu_setup(
         .spawn((
             StateScoped(MenuState::SettingsControls),
             NodeBundle {
-                style: Style {
+                style: Node {
                     padding: UiRect::horizontal(Val::Vw(15.)),
                     top: Val::Px(0.),
                     display: Display::Flex,
@@ -69,7 +69,7 @@ pub fn controls_menu_setup(
                 .spawn((
                     ButtonBundle {
                         z_index: ZIndex::Global(3),
-                        style: Style {
+                        style: Node {
                             position_type: PositionType::Absolute,
                             top: Val::Px(10.),
                             left: Val::Px(10.),
@@ -96,7 +96,7 @@ pub fn controls_menu_setup(
                 .id();
 
             root.spawn(NodeBundle {
-                style: Style {
+                style: Node {
                     overflow: Overflow::clip_y(),
                     height: Val::Vh(100.),
                     width: Val::Vw(60.),
@@ -109,7 +109,7 @@ pub fn controls_menu_setup(
                 wrapper
                     .spawn((
                         NodeBundle {
-                            style: Style {
+                            style: Node {
                                 flex_direction: FlexDirection::Column,
                                 align_items: AlignItems::Center,
                                 width: Val::Percent(100.),
@@ -129,7 +129,7 @@ pub fn controls_menu_setup(
                                     color: Color::WHITE,
                                 },
                             ),
-                            style: Style {
+                            style: Node {
                                 margin: UiRect::vertical(Val::Px(20.)),
                                 ..Default::default()
                             },
@@ -139,7 +139,7 @@ pub fn controls_menu_setup(
                             list.spawn((
                                 ButtonBundle {
                                     border_color: BorderColor(Color::srgb(0.3, 0.3, 0.3)),
-                                    style: Style {
+                                    style: Node {
                                         display: Display::Grid,
                                         width: Val::Percent(100.),
                                         height: Val::Auto,
@@ -166,7 +166,7 @@ pub fn controls_menu_setup(
                                             color: Color::WHITE,
                                         },
                                     ),
-                                    style: Style {
+                                    style: Node {
                                         margin: UiRect::all(Val::Px(10.)),
                                         ..Default::default()
                                     },
@@ -174,7 +174,7 @@ pub fn controls_menu_setup(
                                 });
 
                                 let mut component = line.spawn(NodeBundle {
-                                    style: Style {
+                                    style: Node {
                                         flex_direction: FlexDirection::RowReverse,
                                         column_gap: Val::Px(15.),
                                         margin: UiRect::horizontal(Val::Px(10.)),
@@ -197,7 +197,7 @@ pub fn controls_menu_setup(
                                     ButtonBundle {
                                         border_radius: BorderRadius::all(Val::Percent(25.)),
                                         focus_policy: FocusPolicy::Pass,
-                                        style: Style {
+                                        style: Node {
                                             align_items: AlignItems::Center,
                                             justify_content: JustifyContent::Center,
                                             width: Val::Percent(80.),
@@ -211,7 +211,7 @@ pub fn controls_menu_setup(
                                 .with_children(|btn| {
                                     btn.spawn(ImageBundle {
                                         image: UiImage::new(trash_icon.clone()),
-                                        style: Style {
+                                        style: Node {
                                             width: Val::Percent(100.),
                                             ..Default::default()
                                         },
@@ -228,7 +228,7 @@ pub fn controls_menu_setup(
                     visibility: Visibility::Hidden,
                     focus_policy: FocusPolicy::Block,
                     z_index: ZIndex::Global(2),
-                    style: Style {
+                    style: Node {
                         position_type: PositionType::Absolute,
                         width: Val::Vw(100.),
                         height: Val::Vh(100.),
@@ -248,7 +248,7 @@ pub fn controls_menu_setup(
                     .spawn(NodeBundle {
                         background_color: BackgroundColor(Color::srgb(0.2, 0.2, 0.2)),
                         border_color: BorderColor(Color::Srgba(css::BLUE_VIOLET)),
-                        style: Style {
+                        style: Node {
                             border: UiRect::all(Val::Px(2.5)),
                             min_width: Val::Vw(50.),
                             align_items: AlignItems::Center,
@@ -268,7 +268,7 @@ pub fn controls_menu_setup(
                                     color: Color::WHITE,
                                 },
                             ),
-                            style: Style {
+                            style: Node {
                                 margin: UiRect::all(Val::Px(25.)),
                                 width: Val::Auto,
                                 ..Default::default()
@@ -296,7 +296,7 @@ pub fn update_input_component(
             .spawn(NodeBundle {
                 background_color: BackgroundColor(Color::Srgba(css::BLUE_VIOLET)),
                 border_radius: BorderRadius::all(Val::Px(10.)),
-                style: Style {
+                style: Node {
                     padding: UiRect::horizontal(Val::Px(10.)),
                     ..Default::default()
                 },
@@ -341,7 +341,7 @@ pub fn update_input_component(
 
 pub fn controls_update_system(
     queries: (
-        Query<(&Interaction, &EditControlButton, &Children, &mut Style), Changed<Interaction>>,
+        Query<(&Interaction, &EditControlButton, &Children, &mut Node), Changed<Interaction>>,
         Query<(&Interaction, &ClearButton, &mut BackgroundColor), Changed<Interaction>>,
         Query<(&mut ActionRecorder, &mut Visibility)>,
     ),

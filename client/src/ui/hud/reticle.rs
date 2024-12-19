@@ -8,7 +8,7 @@ pub fn spawn_reticle(mut commands: Commands) {
         .spawn((
             StateScoped(GameState::Game), // Link the reticle to the Game state
             NodeBundle {
-                style: Style {
+                style: Node {
                     position_type: PositionType::Absolute,
                     margin: UiRect {
                         left: Val::Auto,
@@ -24,7 +24,7 @@ pub fn spawn_reticle(mut commands: Commands) {
         .with_children(|parent| {
             // Horizontal line (horizontal bar of the cross)
             parent.spawn(NodeBundle {
-                style: Style {
+                style: Node {
                     position_type: PositionType::Absolute,
                     width: Val::Px(20.0),
                     height: Val::Px(2.0),
@@ -38,7 +38,7 @@ pub fn spawn_reticle(mut commands: Commands) {
 
             // Vertical line (vertical bar of the cross)
             parent.spawn(NodeBundle {
-                style: Style {
+                style: Node {
                     position_type: PositionType::Absolute,
                     width: Val::Px(2.0),
                     height: Val::Px(20.0),

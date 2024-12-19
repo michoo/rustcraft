@@ -16,7 +16,7 @@ use bevy::{
     text::{TextSection, TextStyle},
     ui::{
         AlignContent, AlignItems, BackgroundColor, BorderColor, Display, FlexDirection,
-        GridPlacement, GridTrack, Interaction, JustifyContent, Overflow, Style, UiImage, UiRect,
+        GridPlacement, GridTrack, Interaction, JustifyContent, Node, Overflow, UiImage, UiRect,
         Val,
     },
     utils::hashbrown::HashMap,
@@ -78,7 +78,7 @@ pub fn solo_menu_setup(
         color: Color::srgb(0.3, 0.3, 0.3),
     };
 
-    let btn_style = Style {
+    let btn_style = Node {
         display: Display::Flex,
         flex_direction: FlexDirection::Column,
         justify_content: JustifyContent::Center,
@@ -92,7 +92,7 @@ pub fn solo_menu_setup(
         .spawn((
             StateScoped(MenuState::Solo),
             NodeBundle {
-                style: Style {
+                style: Node {
                     width: Val::Vw(100.0),
                     height: Val::Vh(100.0),
                     align_items: AlignItems::Center,
@@ -109,7 +109,7 @@ pub fn solo_menu_setup(
         .with_children(|root| {
             root.spawn(TextBundle {
                 text: Text::from_section("World list", txt_style.clone()),
-                style: Style {
+                style: Node {
                     border: UiRect::all(Val::Px(1.)),
                     flex_direction: FlexDirection::Column,
                     align_content: AlignContent::Center,
@@ -121,7 +121,7 @@ pub fn solo_menu_setup(
 
             root.spawn(NodeBundle {
                 border_color: BorderColor(BACKGROUND_COLOR),
-                style: Style {
+                style: Node {
                     width: Val::Percent(100.),
                     height: Val::Percent(50.),
                     flex_direction: FlexDirection::Column,
@@ -134,7 +134,7 @@ pub fn solo_menu_setup(
             .with_children(|w| {
                 w.spawn((
                     NodeBundle {
-                        style: Style {
+                        style: Node {
                             flex_direction: FlexDirection::Column,
                             align_items: AlignItems::Center,
                             padding: UiRect::all(Val::Px(10.)),
@@ -151,7 +151,7 @@ pub fn solo_menu_setup(
             });
 
             root.spawn(NodeBundle {
-                style: Style {
+                style: Node {
                     width: Val::Percent(100.),
                     display: Display::Grid,
                     grid_template_columns: vec![GridTrack::flex(1.), GridTrack::flex(1.)],
@@ -290,7 +290,7 @@ fn add_world_item(
     // udpate the name of the world_map
     world_map.name = name.clone();
 
-    let btn_style = Style {
+    let btn_style = Node {
         display: Display::Flex,
         flex_direction: FlexDirection::Column,
         justify_content: JustifyContent::Center,
@@ -300,7 +300,7 @@ fn add_world_item(
         ..Default::default()
     };
 
-    let img_style = Style {
+    let img_style = Node {
         height: Val::Percent(100.),
         ..Default::default()
     };
@@ -308,7 +308,7 @@ fn add_world_item(
     let world = commands
         .spawn(NodeBundle {
             border_color: BorderColor(BACKGROUND_COLOR),
-            style: Style {
+            style: Node {
                 flex_direction: FlexDirection::Row,
                 align_items: AlignItems::Center,
                 column_gap: Val::Px(5.),
@@ -371,7 +371,7 @@ fn add_world_item(
                 }],
                 ..Default::default()
             },
-            style: Style {
+            style: Node {
                 display: Display::Flex,
                 flex_direction: FlexDirection::Column,
                 ..Default::default()

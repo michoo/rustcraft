@@ -36,7 +36,7 @@ pub fn setup_hotbar(
             StateScoped(GameState::Game),
             NodeBundle {
                 background_color: BackgroundColor(Color::srgba(0.3, 0.3, 0.3, 0.3)),
-                style: Style {
+                style: Node {
                     display: Display::Flex,
                     flex_direction: FlexDirection::Row,
                     position_type: PositionType::Absolute,
@@ -58,7 +58,7 @@ pub fn setup_hotbar(
                     ButtonBundle {
                         border_color: BorderColor(Color::srgb(0.3, 0.3, 0.3)),
                         focus_policy: FocusPolicy::Block,
-                        style: Style {
+                        style: Node {
                             width: Val::Px(HOTBAR_CELL_SIZE),
                             height: Val::Px(HOTBAR_CELL_SIZE),
                             margin: UiRect::ZERO,
@@ -79,7 +79,7 @@ pub fn setup_hotbar(
                                 ..Default::default()
                             },
                         ),
-                        style: Style {
+                        style: Node {
                             position_type: PositionType::Absolute,
                             ..Default::default()
                         },
@@ -88,7 +88,7 @@ pub fn setup_hotbar(
                     btn.spawn((
                         ImageBundle {
                             z_index: ZIndex::Local(-1),
-                            style: Style {
+                            style: Node {
                                 width: Val::Px(
                                     HOTBAR_CELL_SIZE - 2. * (HOTBAR_PADDING + HOTBAR_BORDER),
                                 ),

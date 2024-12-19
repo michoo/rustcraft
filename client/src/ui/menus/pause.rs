@@ -11,7 +11,7 @@ use bevy::{
     text::{Text, TextStyle},
     ui::{
         AlignItems, BackgroundColor, BorderColor, Display, FlexDirection, FocusPolicy, Interaction,
-        JustifyContent, Style, UiRect, Val, ZIndex,
+        JustifyContent, Node, UiRect, Val, ZIndex,
     },
 };
 use bevy_renet::renet::RenetClient;
@@ -44,7 +44,7 @@ pub fn setup_pause_menu(
             StateScoped(GameState::Game),
             NodeBundle {
                 background_color: BackgroundColor(Color::BLACK.with_alpha(0.6)),
-                style: Style {
+                style: Node {
                     width: Val::Vw(100.),
                     height: Val::Vh(100.),
                     display: Display::Flex,
@@ -60,7 +60,7 @@ pub fn setup_pause_menu(
         ))
         .with_children(|root| {
             root.spawn(NodeBundle {
-                style: Style {
+                style: Node {
                     display: Display::Flex,
                     flex_direction: FlexDirection::Column,
                     align_items: AlignItems::Center,
@@ -83,7 +83,7 @@ pub fn setup_pause_menu(
                             ButtonBundle {
                                 background_color: BackgroundColor(Color::srgb(0.3, 0.3, 0.3)),
                                 border_color: BorderColor(Color::BLACK),
-                                style: Style {
+                                style: Node {
                                     width: Val::Percent(100.),
                                     border: UiRect::all(Val::Px(3.)),
                                     display: Display::Flex,
