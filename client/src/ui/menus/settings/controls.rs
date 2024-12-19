@@ -1,13 +1,12 @@
 use bevy::{
-    asset::{AssetServer, Handle},
+    asset::AssetServer,
     color::{palettes::css, Color},
     input::ButtonInput,
     prelude::*,
-    text::Font,
     ui::{
         AlignItems, BackgroundColor, BorderColor, BorderRadius, Display, FlexDirection,
         FocusPolicy, Interaction, JustifyContent, Node, Overflow, PositionType, RepeatedGridTrack,
-        UiRect, Val, ZIndex,
+        UiRect, Val,
     },
     utils::default,
 };
@@ -66,7 +65,7 @@ pub fn controls_menu_setup(
                 .spawn((
                     (
                         Button,
-                        ZIndex::Global(3),
+                        GlobalZIndex(3),
                         Node {
                             position_type: PositionType::Absolute,
                             top: Val::Px(10.),
@@ -270,52 +269,47 @@ pub fn update_input_component(
     // List all possible binds, and add them as text elements
     for key in binds {
         let child = commands
-            .spawn((
-                (
-                    BackgroundColor(Color::Srgba(css::BLUE_VIOLET)),
-                    BorderRadius::all(Val::Px(10.)),
-                    Node {
-                        padding: UiRect::horizontal(Val::Px(10.)),
-                        ..default()
-                    },
-                ),
-            ))
+            .spawn(((
+                BackgroundColor(Color::Srgba(css::BLUE_VIOLET)),
+                BorderRadius::all(Val::Px(10.)),
+                Node {
+                    padding: UiRect::horizontal(Val::Px(10.)),
+                    ..default()
+                },
+            ),))
             .with_children(|k| {
-                k.spawn((
-                    Text::from_section(
-                        {
-                            // Formats keybindings
-                            let mut output = format!("{:?}", key).replace("Key", "");
-                            if output.starts_with("Arrow") {
-                                if output.ends_with("Left") {
-                                    output = "←".into()
-                                }
-                                if output.ends_with("Right") {
-                                    output = "→".into()
-                                }
-                                if output.ends_with("Up") {
-                                    output = "↑".into()
-                                }
-                                if output.ends_with("Down") {
-                                    output = "↓".into()
-                                }
+                k.spawn((Text::from_section(
+                    {
+                        // Formats keybindings
+                        let mut output = format!("{:?}", key).replace("Key", "");
+                        if output.starts_with("Arrow") {
+                            if output.ends_with("Left") {
+                                output = "←".into()
                             }
-                            output
-                        },
-                        TextStyle {
-                            font: font.clone(),
-                            font_size: 21.,
-                            color: Color::WHITE,
-                        },
-                    ),
-                ));
+                            if output.ends_with("Right") {
+                                output = "→".into()
+                            }
+                            if output.ends_with("Up") {
+                                output = "↑".into()
+                            }
+                            if output.ends_with("Down") {
+                                output = "↓".into()
+                            }
+                        }
+                        output
+                    },
+                    TextStyle {
+                        font: font.clone(),
+                        font_size: 21.,
+                        color: Color::WHITE,
+                    },
+                ),));
             })
             .id();
 
         commands.entity(entity).add_child(child);
     }
 }
-
 
 pub fn controls_update_system(
     queries: (

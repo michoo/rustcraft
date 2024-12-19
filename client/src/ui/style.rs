@@ -48,11 +48,11 @@ pub fn big_button_style() -> Node {
 // }
 
 // Text styles
-pub fn text_style(font: Handle<Font>, font_size: f32, color: Color) -> TextStyle {
-    TextStyle {
+pub fn text_font(font: Handle<Font>, font_size: f32) -> TextFont {
+    TextFont {
         font,
         font_size,
-        color,
+        ..Default::default()
     }
 }
 
