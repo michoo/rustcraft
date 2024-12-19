@@ -46,7 +46,7 @@ pub fn setup_inventory(
                     ..default()
                 },
                 BackgroundColor(Color::BLACK.with_alpha(0.4)),
-                ZIndex::Global(2),
+                GlobalZIndex(2),
                 Visibility::Hidden,
             ),
         ))
@@ -70,13 +70,11 @@ pub fn setup_inventory(
 
     let inventory_title = commands
         .spawn((
-            Text::from_section(
-                "Inventory",
-                TextStyle {
-                    font_size: 24.,
-                    ..default()
-                },
-            ),
+            Text::new("Inventory"),
+            TextFont {
+                font_size: 24.,
+                ..default()
+            },
             Node {
                 align_content: AlignContent::Center,
                 ..default()
@@ -117,13 +115,11 @@ pub fn setup_inventory(
                     ))
                     .with_children(|btn| {
                         btn.spawn((
-                            Text::from_section(
-                                "Test",
-                                TextStyle {
-                                    font_size: 15.,
-                                    ..default()
-                                },
-                            ),
+                            Text::new("Test"),
+                            TextFont {
+                                font_size: 15.,
+                                ..default()
+                            },
                             Node {
                                 position_type: PositionType::Absolute,
                                 ..default()
@@ -138,7 +134,7 @@ pub fn setup_inventory(
                                 position_type: PositionType::Relative,
                                 ..default()
                             },
-                            atlas.clone(),
+                            // atlas.clone(), // FIXME: check this
                         ));
                     });
             }
@@ -170,7 +166,7 @@ pub fn setup_inventory(
                     top: Val::Percent(0.),
                     ..default()
                 },
-                atlas.clone(),
+                // atlas.clone(), //FIXME: check this
             ));
         })
         .id();

@@ -34,7 +34,7 @@ pub fn setup_main_lighting(
     let celestial_root = commands
         .spawn((
             CelestialRoot,
-            SpatialBundle::default(),
+            // SpatialBundle::default(),
             StateScoped(GameState::Game),
         ))
         .id();
@@ -44,31 +44,31 @@ pub fn setup_main_lighting(
     let sun_light = commands
         .spawn((
             SunLight,
-            DirectionalLightBundle {
-                directional_light: DirectionalLight {
+            (
+                DirectionalLight {
                     illuminance: 5000.,
                     shadows_enabled: true,
-                    ..Default::default()
+                    ..default()
                 },
-                transform: light_transform,
-                ..Default::default()
-            },
+                light_transform,
+            ),
         ))
         .with_children(|parent| {
             parent.spawn((
-                PbrBundle {
-                    mesh: meshes.add(Rectangle::new(CELESTIAL_SIZE, CELESTIAL_SIZE)),
-                    material: material_resource
-                        .global_materials
-                        .get(&GlobalMaterial::Sun)
-                        .expect("Sun material not found !")
-                        .clone(),
-                    transform: Transform {
+                (
+                    Mesh3d(meshes.add(Rectangle::new(CELESTIAL_SIZE, CELESTIAL_SIZE))),
+                    MeshMaterial3d(
+                        material_resource
+                            .global_materials
+                            .get(&GlobalMaterial::Sun)
+                            .expect("Sun material not found !")
+                            .clone(),
+                    ),
+                    Transform {
                         translation: Vec3::new(0., 0., CELESTIAL_DISTANCE),
-                        ..Default::default()
+                        ..default()
                     },
-                    ..Default::default()
-                },
+                ),
                 NotShadowCaster,
                 NotShadowReceiver,
             ));
@@ -79,33 +79,32 @@ pub fn setup_main_lighting(
     let moon_light = commands
         .spawn((
             MoonLight,
-            DirectionalLightBundle {
-                directional_light: DirectionalLight {
+            (
+                DirectionalLight {
                     illuminance: 500.,
                     color: Color::Srgba(Srgba::hex("c9d2de").unwrap()),
                     shadows_enabled: true,
-
-                    ..Default::default()
+                    ..default()
                 },
-                transform: light_transform,
-                ..Default::default()
-            },
+                light_transform,
+            ),
         ))
         .with_children(|parent| {
             parent.spawn((
-                PbrBundle {
-                    mesh: meshes.add(Rectangle::new(CELESTIAL_SIZE, CELESTIAL_SIZE)),
-                    material: material_resource
-                        .global_materials
-                        .get(&GlobalMaterial::Moon)
-                        .expect("Moon material not found !")
-                        .clone(),
-                    transform: Transform {
+                (
+                    Mesh3d(meshes.add(Rectangle::new(CELESTIAL_SIZE, CELESTIAL_SIZE))),
+                    MeshMaterial3d(
+                        material_resource
+                            .global_materials
+                            .get(&GlobalMaterial::Moon)
+                            .expect("Moon material not found !")
+                            .clone(),
+                    ),
+                    Transform {
                         translation: Vec3::new(0., 0., CELESTIAL_DISTANCE),
                         ..Default::default()
                     },
-                    ..Default::default()
-                },
+                ),
                 NotShadowCaster,
                 NotShadowReceiver,
             ));

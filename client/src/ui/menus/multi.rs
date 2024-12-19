@@ -10,11 +10,11 @@ use bevy::{
     color::Color,
     prelude::{
         BuildChildren, Button, Changed, Commands, Component, DespawnRecursiveExt, Entity, Query,
-        Res, StateScoped, TextBundle, With, Without,
+        Res, StateScoped, With, Without,
     },
     ui::{
-        AlignContent, AlignItems, BackgroundColor, BorderColor, Display, FlexDirection,
-        GridPlacement, GridTrack, Interaction, JustifyContent, Node, Overflow, UiRect, Val,
+        AlignContent, AlignItems, BackgroundColor, BorderColor, Display, FlexDirection, GridTrack,
+        Interaction, JustifyContent, Node, Overflow, UiRect, Val,
     },
     utils::hashbrown::HashMap,
 };
@@ -70,13 +70,13 @@ pub fn multiplayer_menu_setup(
     };
 
     let txt_color = TextColor(TEXT_COLOR);
-    let txt_font_inactive = TextFont {
-        font,
-        font_size: 20.0,
-        ..default()
-    };
+    // let txt_font_inactive = TextFont {
+    //     font,
+    //     font_size: 20.0,
+    //     ..default()
+    // };
 
-    let txt_color_inactive = TextColor(Color::srgb(0.3, 0.3, 0.3));
+    // let txt_color_inactive = TextColor(Color::srgb(0.3, 0.3, 0.3));
 
     let btn_style = Node {
         display: Display::Flex,
@@ -140,7 +140,7 @@ pub fn multiplayer_menu_setup(
                         row_gap: Val::Px(10.0),
                         ..default()
                     },),
-                    ScrollingList { position: 0 },
+                    ScrollingList { position: 0.0 },
                     ServerList {
                         servers: HashMap::new(),
                     },
@@ -163,19 +163,19 @@ pub fn multiplayer_menu_setup(
                             btn_style.clone(),
                         ),
                         ServerNameInput,
-                        TextInputBundle {
-                            settings: TextInputSettings {
+                        (
+                            TextInputSettings {
                                 retain_on_submit: true,
                                 mask_character: None,
                             },
-                            placeholder: TextInputPlaceholder {
+                            TextInputPlaceholder {
                                 value: "Server name".into(),
-                                text_style: Some(txt_color_inactive.0.into()),
+                                // text_style: Some(txt_color_inactive.0.into()), // TODO: check this
+                                ..default()
                             },
-                            inactive: TextInputInactive(true),
-                            text_style: txt_font.clone(),
-                            ..default()
-                        },
+                            TextInputInactive(true),
+                            txt_font.clone(),
+                        ),
                     ));
 
                     wrapper.spawn((
@@ -184,19 +184,19 @@ pub fn multiplayer_menu_setup(
                             BackgroundColor(Color::BLACK),
                             btn_style.clone(),
                         ),
-                        TextInputBundle {
-                            settings: TextInputSettings {
+                        (
+                            TextInputSettings {
                                 retain_on_submit: true,
                                 mask_character: None,
                             },
-                            placeholder: TextInputPlaceholder {
+                            TextInputPlaceholder {
                                 value: "Server IP".into(),
-                                text_style: Some(txt_color_inactive.0.into()),
+                                // text_style: Some(txt_color_inactive.0.into()),
+                                ..default()
                             },
-                            inactive: TextInputInactive(true),
-                            text_style: txt_font.clone(),
-                            ..default()
-                        },
+                            TextInputInactive(true),
+                            txt_font.clone(),
+                        ),
                         ServerIpInput,
                     ));
 
@@ -307,29 +307,27 @@ pub fn add_server_item(
 
     let txt = commands
         .spawn((
-            Text::from_sections(vec![
-                TextSection {
-                    value: format!("{}\n", name),
-                    style: TextStyle {
-                        font: asset_server.load("./fonts/RustCraftRegular-Bmg3.otf"),
-                        font_size: 20.,
-                        color: Color::WHITE,
-                    },
-                },
-                TextSection {
-                    value: ip.clone(),
-                    style: TextStyle {
-                        font: asset_server.load("./fonts/RustCraftRegular-Bmg3.otf"),
-                        font_size: 15.,
-                        color: Color::srgb(0.4, 0.4, 0.4),
-                    },
-                },
-            ]),
-            Node {
+            (
+                Text::new(format!("{}\n", name)),
+                // style: TextStyle {
+                //     font: asset_server.load("./fonts/RustCraftRegular-Bmg3.otf"),
+                //     font_size: 20.,
+                //     color: Color::WHITE,
+                // },
+            ),
+            // (TextSection
+            (Text::new(ip.clone())),
+            //     style: TextStyle {
+            //         font: asset_server.load("./fonts/RustCraftRegular-Bmg3.otf"),
+            //         font_size: 15.,
+            //         color: Color::srgb(0.4, 0.4, 0.4),
+            //     },
+            // ),
+            (Node {
                 display: Display::Flex,
                 flex_direction: FlexDirection::Column,
                 ..default()
-            },
+            }),
         ))
         .id();
 

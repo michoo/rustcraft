@@ -89,19 +89,18 @@ pub fn setup_chat(
                     width: Val::Percent(100.),
                     ..default()
                 },),
-                bevy_simple_text_input::TextInputBundle {
-                    placeholder: TextInputPlaceholder {
+                (
+                    TextInputPlaceholder {
                         value: "Send a message...".to_string(),
                         ..default()
                     },
-                    text_style: TextInputTextStyle(TextStyle {
-                        font: asset_server.load("./fonts/RustCraftRegular-Bmg3.otf"),
-                        font_size: 17.,
-                        color: Color::WHITE,
-                    }),
-                    inactive: TextInputInactive(true),
-                    ..default()
-                },
+                    // TextInputTextStyle(TextStyle {
+                    //     font: asset_server.load("./fonts/RustCraftRegular-Bmg3.otf"),
+                    //     font_size: 17.,
+                    //     color: Color::WHITE,
+                    // }),
+                    TextInputInactive(true),
+                ),
             ));
         });
 }
@@ -202,14 +201,12 @@ pub fn render_chat(
                             .as_millis() as u64,
                     },
                     (
-                        Text::from_section(
-                            format!("<{}> : {}", message.author_name, message.content),
-                            TextStyle {
-                                font: asset_server.load("./fonts/RustCraftRegular-Bmg3.otf"),
-                                font_size: 17.,
-                                color: Color::WHITE,
-                            },
-                        ),
+                        Text::new(format!("<{}> : {}", message.author_name, message.content)),
+                        // TextStyle {
+                        //     font: asset_server.load("./fonts/RustCraftRegular-Bmg3.otf"),
+                        //     font_size: 17.,
+                        //     color: Color::WHITE,
+                        // },
                         Visibility::Visible,
                         BackgroundColor(CHAT_COLOR),
                     ),

@@ -278,8 +278,8 @@ pub fn update_input_component(
                 },
             ),))
             .with_children(|k| {
-                k.spawn((Text::from_section(
-                    {
+                k.spawn((
+                    Text::new({
                         // Formats keybindings
                         let mut output = format!("{:?}", key).replace("Key", "");
                         if output.starts_with("Arrow") {
@@ -297,13 +297,14 @@ pub fn update_input_component(
                             }
                         }
                         output
-                    },
-                    TextStyle {
+                    }),
+                    TextFont {
                         font: font.clone(),
                         font_size: 21.,
-                        color: Color::WHITE,
+                        ..default()
                     },
-                ),));
+                    TextColor(Color::WHITE),
+                ));
             })
             .id();
 

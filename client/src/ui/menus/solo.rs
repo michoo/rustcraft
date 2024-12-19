@@ -70,13 +70,13 @@ pub fn solo_menu_setup(
 
     let txt_color = TextColor(Color::WHITE);
 
-    let txt_font_inactive = TextFont {
-        font,
-        font_size: 20.,
-        ..default()
-    };
+    // let txt_font_inactive = TextFont {
+    //     font,
+    //     font_size: 20.,
+    //     ..default()
+    // };
 
-    let txt_color_inactive = TextColor(Color::srgb(0.3, 0.3, 0.3));
+    // let txt_color_inactive = TextColor(Color::srgb(0.3, 0.3, 0.3));
 
     let btn_style = Node {
         display: Display::Flex,
@@ -106,8 +106,8 @@ pub fn solo_menu_setup(
         .with_children(|root| {
             root.spawn((
                 Text::new("World list"),
-                txt_color,
-                txt_font,
+                txt_color.clone(),
+                txt_font.clone(),
                 Node {
                     border: UiRect::all(Val::Px(1.)),
                     flex_direction: FlexDirection::Column,
@@ -165,19 +165,19 @@ pub fn solo_menu_setup(
                             node,
                         ),
                         WorldNameInput,
-                        TextInputBundle {
-                            settings: TextInputSettings {
+                        (
+                            TextInputSettings {
                                 retain_on_submit: true,
                                 mask_character: None,
                             },
-                            placeholder: TextInputPlaceholder {
+                            TextInputPlaceholder {
                                 value: "World name".into(),
-                                text_style: Some(txt_style_inactive.clone()),
+                                // text_style: Some(txt_style_inactive.clone()),
+                                ..default()
                             },
-                            inactive: TextInputInactive(true),
-                            text_style: TextInputTextStyle(txt_style.clone()),
-                            ..Default::default()
-                        },
+                            TextInputInactive(true),
+                            // TextInputTextStyle(txt_style.clone()),
+                        ),
                     ));
 
                     wrapper
@@ -338,14 +338,14 @@ fn add_world_item(
 
     let txt = commands
         .spawn((
-            Text::from_sections(vec![TextSection {
-                value: format!("{}\n", name),
-                style: TextStyle {
-                    font: asset_server.load("./fonts/RustCraftRegular-Bmg3.otf"),
-                    font_size: 20.,
-                    color: Color::WHITE,
-                },
-            }]),
+            (
+                Text::new(format!("{}\n", name)),
+                // style: TextStyle {
+                //     font: asset_server.load("./fonts/RustCraftRegular-Bmg3.otf"),
+                //     font_size: 20.,
+                //     color: Color::WHITE,
+                // },
+            ),
             Node {
                 display: Display::Flex,
                 flex_direction: FlexDirection::Column,
