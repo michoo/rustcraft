@@ -2,17 +2,14 @@ use bevy::{
     asset::{AssetServer, Handle},
     color::{palettes::css, Color},
     input::ButtonInput,
-    prelude::{
-        BuildChildren, ButtonBundle, Changed, Children, Commands, Component, DespawnRecursiveExt,
-        Entity, ImageBundle, KeyCode, NodeBundle, Query, Res, ResMut, StateScoped, TextBundle,
-        Visibility,
-    },
-    text::{Font, Text, TextStyle},
+    prelude::*,
+    text::Font,
     ui::{
         AlignItems, BackgroundColor, BorderColor, BorderRadius, Display, FlexDirection,
         FocusPolicy, Interaction, JustifyContent, Node, Overflow, PositionType, RepeatedGridTrack,
-        UiImage, UiRect, Val, ZIndex,
+        UiRect, Val, ZIndex,
     },
+    utils::default,
 };
 use shared::GameFolderPaths;
 
@@ -173,14 +170,11 @@ pub fn controls_menu_setup(
                                     ..Default::default()
                                 });
 
-                                let mut component = line.spawn(NodeBundle {
-                                    style: Node {
-                                        flex_direction: FlexDirection::RowReverse,
-                                        column_gap: Val::Px(15.),
-                                        margin: UiRect::horizontal(Val::Px(10.)),
-                                        ..Default::default()
-                                    },
-                                    ..Default::default()
+                                let mut component = line.spawn(Node {
+                                    flex_direction: FlexDirection::RowReverse,
+                                    column_gap: Val::Px(15.),
+                                    margin: UiRect::horizontal(Val::Px(10.)),
+                                    ..default()
                                 });
 
                                 let id = component.id();
@@ -194,18 +188,18 @@ pub fn controls_menu_setup(
                                 );
 
                                 line.spawn((
-                                    ButtonBundle {
-                                        border_radius: BorderRadius::all(Val::Percent(25.)),
-                                        focus_policy: FocusPolicy::Pass,
-                                        style: Node {
+                                    (
+                                        Button,
+                                        BorderRadius::all(Val::Percent(25.)),
+                                        FocusPolicy::Pass,
+                                        Node {
                                             align_items: AlignItems::Center,
                                             justify_content: JustifyContent::Center,
                                             width: Val::Percent(80.),
                                             padding: UiRect::all(Val::Px(5.)),
                                             ..Default::default()
                                         },
-                                        ..Default::default()
-                                    },
+                                    ),
                                     ClearButton(*action, id),
                                 ))
                                 .with_children(|btn| {
@@ -224,11 +218,8 @@ pub fn controls_menu_setup(
             });
 
             root.spawn((
-                NodeBundle {
-                    visibility: Visibility::Hidden,
-                    focus_policy: FocusPolicy::Block,
-                    z_index: ZIndex::Global(2),
-                    style: Node {
+                (
+                    Node {
                         position_type: PositionType::Absolute,
                         width: Val::Vw(100.),
                         height: Val::Vh(100.),
@@ -236,8 +227,10 @@ pub fn controls_menu_setup(
                         justify_content: JustifyContent::Center,
                         ..Default::default()
                     },
-                    ..Default::default()
-                },
+                    Visibility::Hidden,
+                    FocusPolicy::Block,
+                    GlobalZIndex(2),
+                ),
                 ActionRecorder {
                     action: GameAction::Escape,
                     entity: placeholder,

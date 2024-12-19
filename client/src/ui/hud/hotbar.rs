@@ -54,10 +54,11 @@ pub fn setup_hotbar(
             for i in 0..MAX_HOTBAR_SLOTS {
                 bar.spawn((
                     InventoryCell { id: i },
-                    ButtonBundle {
-                        border_color: BorderColor(Color::srgb(0.3, 0.3, 0.3)),
-                        focus_policy: FocusPolicy::Block,
-                        style: Node {
+                    (
+                        Button,
+                        BorderColor(Color::srgb(0.3, 0.3, 0.3)),
+                        FocusPolicy::Block,
+                        Node {
                             width: Val::Px(HOTBAR_CELL_SIZE),
                             height: Val::Px(HOTBAR_CELL_SIZE),
                             margin: UiRect::ZERO,
@@ -66,8 +67,7 @@ pub fn setup_hotbar(
                             border: UiRect::all(Val::Px(HOTBAR_BORDER)),
                             ..Default::default()
                         },
-                        ..Default::default()
-                    },
+                    ),
                 ))
                 .with_children(|btn| {
                     btn.spawn(TextBundle {
