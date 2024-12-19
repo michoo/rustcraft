@@ -41,10 +41,8 @@ pub fn setup_chat(
             StateScoped(crate::GameState::Game),
             ChatRoot,
             UiDialog,
-            NodeBundle {
-                background_color: BackgroundColor(CHAT_COLOR),
-                visibility: Visibility::Hidden,
-                style: Node {
+            (
+                Node {
                     display: Display::Flex,
                     position_type: PositionType::Absolute,
                     bottom: Val::Px(0.),
@@ -57,16 +55,17 @@ pub fn setup_chat(
                         y: OverflowAxis::Hidden,
                     },
                     flex_direction: FlexDirection::Column,
-                    ..Default::default()
+                    ..default()
                 },
-                ..Default::default()
-            },
+                BackgroundColor(CHAT_COLOR),
+                Visibility::Hidden,
+            ),
         ))
         .with_children(|root| {
             root.spawn((
                 ChatDisplay,
-                NodeBundle {
-                    style: Node {
+                (
+                    Node {
                         display: Display::Flex,
                         flex_direction: FlexDirection::Column,
                         justify_content: JustifyContent::End,
@@ -76,30 +75,28 @@ pub fn setup_chat(
                             y: OverflowAxis::Hidden,
                         },
                         width: Val::Percent(100.),
-                        ..Default::default()
+                        ..default()
                     },
-                    ..Default::default()
-                },
+                ),
             ))
             .with_children(|d| {
                 // DO NOT REMOVE !!!
                 // Function send_chat has a bit of a meltdown if the ChatDisplay has no children (cuz of the Query)
-                d.spawn(NodeBundle::default());
+                d.spawn((Node::default(),));
             });
 
             root.spawn((
                 ChatInput,
-                NodeBundle {
-                    style: Node {
+                (
+                    Node {
                         width: Val::Percent(100.),
-                        ..Default::default()
+                        ..default()
                     },
-                    ..Default::default()
-                },
+                ),
                 bevy_simple_text_input::TextInputBundle {
                     placeholder: TextInputPlaceholder {
                         value: "Send a message...".to_string(),
-                        ..Default::default()
+                        ..default()
                     },
                     text_style: TextInputTextStyle(TextStyle {
                         font: asset_server.load("./fonts/RustCraftRegular-Bmg3.otf"),
@@ -107,11 +104,12 @@ pub fn setup_chat(
                         color: Color::WHITE,
                     }),
                     inactive: TextInputInactive(true),
-                    ..Default::default()
+                    ..default()
                 },
             ));
         });
 }
+
 
 pub fn render_chat(
     resources: (

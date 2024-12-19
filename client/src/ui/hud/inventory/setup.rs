@@ -59,19 +59,19 @@ pub fn setup_inventory(
     let dialog = commands
         .spawn((
             InventoryDialog,
-            NodeBundle {
-                background_color: BackgroundColor(Color::srgb(0.4, 0.4, 0.4)),
-                border_radius: BorderRadius::all(Val::Percent(10.)),
-                style: Node {
+            (
+                BackgroundColor(Color::srgb(0.4, 0.4, 0.4)),
+                BorderRadius::all(Val::Percent(10.)),
+                Node {
                     display: Display::Flex,
                     flex_direction: FlexDirection::Column,
                     padding: UiRect::all(Val::Percent(7.)),
                     ..default()
                 },
-                ..default()
-            },
+            ),
         ))
         .id();
+
 
     let inventory_title = commands
         .spawn(TextBundle {

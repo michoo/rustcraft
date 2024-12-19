@@ -45,8 +45,8 @@ pub fn controls_menu_setup(
     commands
         .spawn((
             StateScoped(MenuState::SettingsControls),
-            NodeBundle {
-                style: Node {
+            (
+                Node {
                     padding: UiRect::horizontal(Val::Vw(15.)),
                     top: Val::Px(0.),
                     display: Display::Flex,
@@ -55,11 +55,11 @@ pub fn controls_menu_setup(
                     align_items: AlignItems::Center,
                     justify_content: JustifyContent::Center,
                     row_gap: Val::Px(10.),
-                    ..Default::default()
+                    ..default()
                 },
-                ..Default::default()
-            },
-            UiImage::new(background_image),
+                BackgroundColor(Color::NONE),
+            ),
+            ImageNode::new(background_image),
         ))
         .with_children(|root| {
             let placeholder = root
