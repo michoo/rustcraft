@@ -13,8 +13,7 @@ use bevy::input::mouse::{MouseScrollUnit, MouseWheel};
 use bevy::input::ButtonInput;
 use bevy::log::debug;
 use bevy::prelude::{
-    EventReader, KeyCode, MouseButton, Node, Query, Res, ResMut, Text, Val, Visibility, Window,
-    With, Without,
+    Entity, EventReader, KeyCode, MouseButton, Node, Query, Res, ResMut, Text, TextUiWriter, Val, Visibility, Window, With, Without
 };
 use bevy::sprite::TextureAtlas;
 use bevy::ui::{BorderColor, Interaction};
@@ -243,14 +242,15 @@ pub fn render_inventory_hotbar(
 
 pub fn update_inventory_cell(
     stack: &Option<shared::world::ItemStack>,
-    txt: &mut Text,
+    txt: Entity,
     visibility: &mut Visibility,
     atlas: &mut TextureAtlas,
     materials: &MaterialResource,
+    mut text_writer: TextUiWriter,
 ) {
     // Set content
     if let Some(fstack) = stack {
-        txt.sections[0].value = format!("{:?}", fstack.nb);
+        *text_writer.text(txt, 0) = format!("{:?}", fstack.nb);
         atlas.index = (materials
             .items
             .uvs
@@ -260,7 +260,7 @@ pub fn update_inventory_cell(
             * materials.items.uvs.len() as f32) as usize;
         *visibility = Visibility::Inherited;
     } else {
-        txt.sections[0].value = "".to_string();
+        *text_writer.text(txt, 0) = "".to_string();
         *visibility = Visibility::Hidden;
     };
 }

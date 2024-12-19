@@ -135,7 +135,7 @@ pub fn update_celestial_bodies(
         // However, this approach should be avoided if this system might ever run in parallel or be accessed
         // from multiple threads simultaneously.
 
-        // Update local time with delta_seconds
+        // Update local time with delta_secs
         LOCAL_TIME += time.delta_secs();
 
         // Synchronize with the server time every second

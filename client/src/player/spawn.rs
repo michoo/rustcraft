@@ -91,44 +91,18 @@ pub fn spawn_player(
 
         let mut entity = commands.spawn((
             StateScoped(GameState::Game),
-            PbrBundle {
-                mesh: meshes.add(Mesh::from(Cuboid::new(
-                    player.width,
-                    player.height,
-                    player.width,
-                ))),
-                material: materials.add(color),
-                transform: Transform::from_translation(spawn_coords),
-                ..Default::default()
-            },
+            Transform::from_translation(spawn_coords),
+            Visibility::default(),
+            Mesh3d(meshes.add(Mesh::from(Cuboid::new(
+                player.width,
+                player.height,
+                player.width,
+            )))),
+            MeshMaterial3d(materials.add(color)),
             player,
             Name::new("Player"),
         ));
 
-        let mut label = |entity: Entity, label: &str| {
-            commands
-                .spawn((
-                    Node {
-                        position_type: PositionType::Absolute,
-                        ..default()
-                    },
-                    ExampleLabel { entity },
-                ))
-                .with_children(|parent| {
-                    parent.spawn((
-                        Text::new(label),
-                        label_text_style.clone(),
-                        Node {
-                            position_type: PositionType::Absolute,
-                            bottom: Val::ZERO,
-                            ..default()
-                        },
-                        TextLayout::default().with_no_wrap(),
-                    ));
-                });
-        };
-
-        label(opaque, "┌─ Opaque\n│\n│\n│\n│");
 
         if is_current_player {
             target_server.state = TargetServerState::FullyReady;
