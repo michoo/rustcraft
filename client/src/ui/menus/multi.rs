@@ -306,32 +306,32 @@ pub fn add_server_item(
         .id();
 
     let txt = commands
-        .spawn((
-            (
-                Text::new(format!("{}\n", name)),
-                TextFont {
-                    font: asset_server.load("./fonts/RustCraftRegular-Bmg3.otf"),
-                    font_size: 20.,
-                    ..default()
-                },
-                TextColor(Color::WHITE),
-            ),
-            (
-                Text::new(ip.clone()),
-                TextFont {
-                    font: asset_server.load("./fonts/RustCraftRegular-Bmg3.otf"),
-                    font_size: 15.,
-                    ..default()
-                },
-                TextColor(Color::srgb(0.4, 0.4, 0.4)),
-            ),
-            (Node {
-                display: Display::Flex,
-                flex_direction: FlexDirection::Column,
+        .spawn(((
+            Text::new(format!("{}\n", name)),
+            TextFont {
+                font: asset_server.load("./fonts/RustCraftRegular-Bmg3.otf"),
+                font_size: 20.,
                 ..default()
-            }),
-        ))
+            },
+            TextColor(Color::WHITE),
+        ),))
         .id();
+
+    commands.spawn((
+        Text::new(ip.clone()),
+        TextFont {
+            font: asset_server.load("./fonts/RustCraftRegular-Bmg3.otf"),
+            font_size: 15.,
+            ..default()
+        },
+        TextColor(Color::srgb(0.4, 0.4, 0.4)),
+    ));
+
+    // (Node {
+    //             display: Display::Flex,
+    //             flex_direction: FlexDirection::Column,
+    //             ..default()
+    //         }),
 
     commands
         .entity(server)
