@@ -114,7 +114,15 @@ pub fn player_movement_system(
         mut client,
     ) = resources;
 
+    let res = player_query.get_single_mut();
+    // return early if player is not spawned
+    if res.is_err() {
+        debug!("player not found");
+        return;
+    }
+
     let (mut player_transform, mut player, material_handle) = player_query.single_mut();
+
     let camera_transform = camera_query.single();
 
     if *ui_mode == UIMode::Closed {
