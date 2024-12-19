@@ -105,16 +105,15 @@ pub fn setup_hud(mut commands: Commands) {
         ))
         .id();
 
-    let default_text_bundle = || TextBundle {
-        text: Text::from_sections([TextSection {
-            value: "...".into(),
-            style: TextStyle {
+    let default_text_bundle = || {
+        (
+            Text::new("..."),
+            TextFont {
                 font_size: 16.0,
-                color: Color::WHITE,
                 ..default()
             },
-        }]),
-        ..Default::default()
+            TextColor(Color::WHITE),
+        )
     };
 
     let coords_text = commands.spawn((CoordsText, default_text_bundle())).id();
@@ -129,21 +128,16 @@ pub fn setup_hud(mut commands: Commands) {
     let time_text = commands
         .spawn((
             TimeText,
-            TextBundle {
-                text: Text::from_sections([TextSection {
-                    value: "Time: N/A".into(),
-                    style: TextStyle {
-                        font_size: 16.0,
-                        color: Color::WHITE,
-                        ..default()
-                    },
-                }]),
-                ..Default::default()
+            Text::new("Time: N/A"),
+            TextColor(Color::WHITE),
+            TextFont {
+                font_size: 16.0,
+                ..default()
             },
         ))
         .id();
 
-    commands.entity(root).push_children(&[
+    commands.entity(root).add_children(&[
         text_fps,
         coords_text,
         blocks_number_text,

@@ -195,10 +195,7 @@ pub fn solo_menu_setup(
                             MultiplayerButtonAction::Add,
                         ))
                         .with_children(|btn| {
-                            btn.spawn(TextBundle {
-                                text: Text::from_section("Create world", txt_style.clone()),
-                                ..default()
-                            });
+                            btn.spawn((Text::new("Create world"), txt_style.clone()));
                         });
 
                     wrapper

@@ -78,17 +78,15 @@ pub fn controls_menu_setup(
                     MenuButtonAction::BackToSettings,
                 ))
                 .with_children(|btn| {
-                    btn.spawn(TextBundle {
-                        text: Text::from_section(
-                            "Back",
-                            TextStyle {
-                                font: font.clone(),
-                                font_size: 21.,
-                                color: Color::WHITE,
-                            },
-                        ),
-                        ..Default::default()
-                    });
+                    btn.spawn((
+                        Text::new("Back"),
+                        TextFont {
+                            font: font.clone(),
+                            font_size: 21.,
+                            ..default()
+                        },
+                        TextColor(Color::WHITE),
+                    ));
                 })
                 .id();
 
