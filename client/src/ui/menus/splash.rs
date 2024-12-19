@@ -23,16 +23,13 @@ fn splash_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
 
     commands
         .spawn((
-            NodeBundle {
-                style: Node {
-                    align_items: AlignItems::Center,
-                    justify_content: JustifyContent::Center,
-                    width: Val::Percent(100.0),
-                    height: Val::Percent(100.0),
-                    ..default()
-                },
+            (Node {
+                align_items: AlignItems::Center,
+                justify_content: JustifyContent::Center,
+                width: Val::Percent(100.0),
+                height: Val::Percent(100.0),
                 ..default()
-            },
+            }),
             StateScoped(GameState::Splash),
         ))
         .with_children(|parent| {

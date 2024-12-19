@@ -91,19 +91,16 @@ pub fn solo_menu_setup(
     commands
         .spawn((
             StateScoped(MenuState::Solo),
-            NodeBundle {
-                style: Node {
-                    width: Val::Vw(100.0),
-                    height: Val::Vh(100.0),
-                    align_items: AlignItems::Center,
-                    justify_content: JustifyContent::Center,
-                    flex_direction: FlexDirection::Column,
-                    padding: UiRect::horizontal(Val::Percent(20.)),
-                    row_gap: Val::Percent(2.),
-                    ..Default::default()
-                },
+            (Node {
+                width: Val::Vw(100.0),
+                height: Val::Vh(100.0),
+                align_items: AlignItems::Center,
+                justify_content: JustifyContent::Center,
+                flex_direction: FlexDirection::Column,
+                padding: UiRect::horizontal(Val::Percent(20.)),
+                row_gap: Val::Percent(2.),
                 ..Default::default()
-            },
+            },),
             UiImage::new(background_image),
         ))
         .with_children(|root| {
@@ -119,9 +116,8 @@ pub fn solo_menu_setup(
                 ..Default::default()
             });
 
-            root.spawn(NodeBundle {
-                border_color: BorderColor(BACKGROUND_COLOR),
-                style: Node {
+            root.spawn((
+                Node {
                     width: Val::Percent(100.),
                     height: Val::Percent(50.),
                     flex_direction: FlexDirection::Column,
@@ -129,8 +125,8 @@ pub fn solo_menu_setup(
                     border: UiRect::all(Val::Px(2.)),
                     ..Default::default()
                 },
-                ..Default::default()
-            })
+                BorderColor(BACKGROUND_COLOR),
+            ))
             .with_children(|w| {
                 w.spawn((
                     NodeBundle {

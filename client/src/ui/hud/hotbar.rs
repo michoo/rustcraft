@@ -34,9 +34,8 @@ pub fn setup_hotbar(
         .spawn((
             Hotbar { selected: 0 },
             StateScoped(GameState::Game),
-            NodeBundle {
-                background_color: BackgroundColor(Color::srgba(0.3, 0.3, 0.3, 0.3)),
-                style: Node {
+            (
+                Node {
                     display: Display::Flex,
                     flex_direction: FlexDirection::Row,
                     position_type: PositionType::Absolute,
@@ -47,9 +46,9 @@ pub fn setup_hotbar(
                     margin: UiRect::all(Val::Auto),
                     ..Default::default()
                 },
-                z_index: ZIndex::Global(1),
-                ..Default::default()
-            },
+                BackgroundColor(Color::srgba(0.3, 0.3, 0.3, 0.3)),
+                GlobalZIndex(1),
+            ),
         ))
         .with_children(|bar| {
             for i in 0..MAX_HOTBAR_SLOTS {
