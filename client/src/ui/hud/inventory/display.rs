@@ -47,6 +47,7 @@ pub fn render_inventory_hotbar(
         Res<MaterialResource>,
     ),
     mut scroll: EventReader<MouseWheel>,
+    mut writer: TextUiWriter,
 ) {
     let mut vis = visibility_query.single_mut();
     if is_action_just_pressed(GameAction::ToggleInventory, &keyboard_input, &key_map) {
@@ -103,6 +104,7 @@ pub fn render_inventory_hotbar(
         &mut stack_vis,
         &mut stack_atlas,
         &materials,
+        &mut writer,
     );
 
     if let Some(c_pos) = window_query.single().cursor_position() {
@@ -126,6 +128,7 @@ pub fn render_inventory_hotbar(
             &mut stack_vis,
             &mut stack_atlas,
             &materials,
+            &mut writer,
         );
 
         // Show selected stack in hotbar
@@ -247,7 +250,7 @@ pub fn update_inventory_cell(
     visibility: &mut Visibility,
     atlas: &mut TextureAtlas,
     materials: &MaterialResource,
-    mut text_writer: TextUiWriter,
+    text_writer: &mut TextUiWriter,
 ) {
     // Set content
     if let Some(fstack) = stack {
