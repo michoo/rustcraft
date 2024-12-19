@@ -1,5 +1,6 @@
 use crate::{
     network::{CurrentPlayerProfile, TargetServer, TargetServerState},
+    player::PlayerMaterialHandle,
     GameState,
 };
 use bevy::prelude::*;
@@ -90,7 +91,6 @@ pub fn spawn_player(
         info!("Spawning new player object: {}", player.id);
 
         let mut entity = commands.spawn((
-            StateScoped(GameState::Game),
             Transform::from_translation(spawn_coords),
             Visibility::default(),
             Mesh3d(meshes.add(Mesh::from(Cuboid::new(
@@ -99,6 +99,9 @@ pub fn spawn_player(
                 player.width,
             )))),
             MeshMaterial3d(materials.add(color)),
+            PlayerMaterialHandle {
+                handle: materials.add(color),
+            },
             player,
             Name::new("Player"),
         ));
@@ -106,6 +109,7 @@ pub fn spawn_player(
         if is_current_player {
             target_server.state = TargetServerState::FullyReady;
             entity.insert(CurrentPlayerMarker {});
+            info!("Inserted current player marker");
         }
     }
 }
