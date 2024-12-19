@@ -257,6 +257,66 @@ pub fn controls_menu_setup(
         });
 }
 
+pub fn update_input_component(
+    commands: &mut Commands,
+    entity: Entity,
+    binds: &Vec<KeyCode>,
+    assets: &AssetServer,
+    _paths: &Res<GameFolderPaths>,
+) {
+    commands.entity(entity).despawn_descendants();
+    let font: Handle<Font> = assets.load("./fonts/RustCraftRegular-Bmg3.otf");
+
+    // List all possible binds, and add them as text elements
+    for key in binds {
+        let child = commands
+            .spawn((
+                (
+                    BackgroundColor(Color::Srgba(css::BLUE_VIOLET)),
+                    BorderRadius::all(Val::Px(10.)),
+                    Node {
+                        padding: UiRect::horizontal(Val::Px(10.)),
+                        ..default()
+                    },
+                ),
+            ))
+            .with_children(|k| {
+                k.spawn((
+                    Text::from_section(
+                        {
+                            // Formats keybindings
+                            let mut output = format!("{:?}", key).replace("Key", "");
+                            if output.starts_with("Arrow") {
+                                if output.ends_with("Left") {
+                                    output = "←".into()
+                                }
+                                if output.ends_with("Right") {
+                                    output = "→".into()
+                                }
+                                if output.ends_with("Up") {
+                                    output = "↑".into()
+                                }
+                                if output.ends_with("Down") {
+                                    output = "↓".into()
+                                }
+                            }
+                            output
+                        },
+                        TextStyle {
+                            font: font.clone(),
+                            font_size: 21.,
+                            color: Color::WHITE,
+                        },
+                    ),
+                ));
+            })
+            .id();
+
+        commands.entity(entity).add_child(child);
+    }
+}
+
+
 pub fn controls_update_system(
     queries: (
         Query<(&Interaction, &EditControlButton, &Children, &mut Node), Changed<Interaction>>,
