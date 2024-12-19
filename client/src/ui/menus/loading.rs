@@ -3,7 +3,7 @@ use bevy::prelude::*;
 
 // Spawns the necessary components for the loading screen.
 pub fn load_loading_screen(mut commands: Commands) {
-    let text_style = TextStyle {
+    let text_font = TextFont {
         font_size: 80.0,
         ..default()
     };
@@ -33,9 +33,6 @@ pub fn load_loading_screen(mut commands: Commands) {
             ),
         ))
         .with_children(|parent| {
-            parent.spawn(TextBundle::from_sections([TextSection::new(
-                "Loading...",
-                text_style.clone(),
-            )]));
+            parent.spawn((Text::new("Loading..."), text_font.clone()));
         });
 }

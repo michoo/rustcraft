@@ -18,13 +18,13 @@ pub fn setup_hud(mut commands: Commands) {
         .spawn((
             HudRoot,
             StateScoped(GameState::Game),
-            NodeBundle {
+            (
                 // give it a dark background for readability
-                background_color: BackgroundColor(Color::BLACK.with_alpha(0.5)),
+                BackgroundColor(Color::BLACK.with_alpha(0.5)),
                 // make it "always on top" by setting the Z index to maximum
                 // we want it to be displayed over all other UI
-                z_index: ZIndex::Global(i32::MAX),
-                style: Style {
+                GlobalZIndex(i32::MAX),
+                Node {
                     position_type: PositionType::Absolute,
                     // position it at the top-left corner
                     // 1% away from the top window edge
@@ -39,8 +39,7 @@ pub fn setup_hud(mut commands: Commands) {
                     flex_direction: FlexDirection::Column,
                     ..Default::default()
                 },
-                ..Default::default()
-            },
+            ),
         ))
         .id();
     // create our text
