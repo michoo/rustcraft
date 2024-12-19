@@ -201,20 +201,18 @@ pub fn render_chat(
                             .unwrap()
                             .as_millis() as u64,
                     },
-                    TextBundle {
-                        text: Text::from_section(
+                    (
+                        Text::from_section(
                             format!("<{}> : {}", message.author_name, message.content),
                             TextStyle {
                                 font: asset_server.load("./fonts/RustCraftRegular-Bmg3.otf"),
                                 font_size: 17.,
                                 color: Color::WHITE,
-                            }
-                            .clone(),
+                            },
                         ),
-                        visibility: Visibility::Visible,
-                        background_color: BackgroundColor(CHAT_COLOR),
-                        ..Default::default()
-                    },
+                        Visibility::Visible,
+                        BackgroundColor(CHAT_COLOR),
+                    ),
                 ))
                 .id();
 

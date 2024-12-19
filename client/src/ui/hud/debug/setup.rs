@@ -46,9 +46,8 @@ pub fn setup_hud(mut commands: Commands) {
     let text_fps = commands
         .spawn((
             FpsText,
-            TextBundle {
-                // use two sections, so it is easy to update just the number
-                text: Text::from_sections([
+            (
+                Text::from_sections([
                     TextSection {
                         value: "FPS: ".into(),
                         style: TextStyle {
@@ -72,8 +71,8 @@ pub fn setup_hud(mut commands: Commands) {
                         },
                     },
                 ]),
-                ..Default::default()
-            },
+                TextColor(Color::WHITE),
+            ),
         ))
         .id();
 
@@ -81,9 +80,8 @@ pub fn setup_hud(mut commands: Commands) {
     let block_text = commands
         .spawn((
             BlockText,
-            TextBundle {
-                // use two sections, so it is easy to update just the number
-                text: Text::from_sections([
+            (
+                Text::from_sections([
                     TextSection {
                         value: "Selected block : ".into(),
                         style: TextStyle {
@@ -100,8 +98,8 @@ pub fn setup_hud(mut commands: Commands) {
                         },
                     },
                 ]),
-                ..Default::default()
-            },
+                TextColor(Color::srgb(0.2, 0.2, 0.2)),
+            ),
         ))
         .id();
 

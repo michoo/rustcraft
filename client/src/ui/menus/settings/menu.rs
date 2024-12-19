@@ -1,10 +1,14 @@
 use crate::ui::assets::*;
-use crate::ui::style::text_style;
 use crate::{ui::assets::load_background_image, TEXT_COLOR};
+use bevy::prelude::ImageNode;
+use bevy::prelude::*;
+use bevy::text::{TextColor, TextFont};
+use bevy::ui::BackgroundColor;
+use bevy::utils::default;
 use bevy::{
     asset::AssetServer,
-    prelude::{BuildChildren, ButtonBundle, Commands, NodeBundle, Res, StateScoped, TextBundle},
-    ui::{AlignItems, FlexDirection, JustifyContent, Node, UiImage, UiRect, Val},
+    prelude::{BuildChildren, Commands, Res, StateScoped},
+    ui::{AlignItems, FlexDirection, JustifyContent, Node, UiRect, Val},
 };
 
 use crate::menus::{MenuButtonAction, MenuState};
@@ -19,36 +23,39 @@ pub fn settings_menu_setup(mut commands: Commands, asset_server: Res<AssetServer
         margin: UiRect::all(Val::Px(20.0)),
         justify_content: JustifyContent::Center,
         align_items: AlignItems::Center,
-        ..Default::default()
+        ..default()
     };
 
-    let button_text_style = text_style(font.clone(), 33.0, TEXT_COLOR);
+    let button_font = TextFont {
+        font: font.clone(),
+        font_size: 33.0,
+        ..default()
+    };
+
+    let button_color = TextColor(TEXT_COLOR);
 
     commands
         .spawn((
-            NodeBundle {
-                style: Node {
+            (
+                Node {
                     width: Val::Percent(100.0),
                     height: Val::Percent(100.0),
                     align_items: AlignItems::Center,
                     justify_content: JustifyContent::Center,
-                    ..Default::default()
+                    ..default()
                 },
-                ..Default::default()
-            },
-            UiImage::new(background_image),
+                BackgroundColor(Color::NONE),
+            ),
+            ImageNode::new(background_image),
             StateScoped(MenuState::Settings),
         ))
         .with_children(|parent| {
             parent
-                .spawn(NodeBundle {
-                    style: Node {
-                        flex_direction: FlexDirection::Column,
-                        align_items: AlignItems::Center,
-                        ..Default::default()
-                    },
-                    ..Default::default()
-                })
+                .spawn((Node {
+                    flex_direction: FlexDirection::Column,
+                    align_items: AlignItems::Center,
+                    ..default()
+                },))
                 .with_children(|parent| {
                     for (action, text) in [
                         (MenuButtonAction::SettingsControls, "Controls"),
@@ -56,16 +63,14 @@ pub fn settings_menu_setup(mut commands: Commands, asset_server: Res<AssetServer
                     ] {
                         parent
                             .spawn((
-                                ButtonBundle {
-                                    style: button_style.clone(),
-                                    ..Default::default()
-                                },
+                                (Button, button_style.clone(), BackgroundColor(Color::NONE)),
                                 action,
                             ))
                             .with_children(|parent| {
-                                parent.spawn(TextBundle::from_section(
-                                    text,
-                                    button_text_style.clone(),
+                                parent.spawn((
+                                    Text::new(text),
+                                    button_font.clone(),
+                                    button_color.clone(),
                                 ));
                             });
                     }

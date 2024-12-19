@@ -290,12 +290,12 @@ fn add_world_item(
         align_items: AlignItems::Center,
         border: UiRect::all(Val::Px(2.)),
         height: Val::Percent(80.),
-        ..Default::default()
+        ..default()
     };
 
     let img_style = Node {
         height: Val::Percent(100.),
-        ..Default::default()
+        ..default()
     };
 
     let world = commands
@@ -321,11 +321,7 @@ fn add_world_item(
         ))
         .with_children(|btn| {
             let icon = asset_server.load(format!("{}/graphics/play.png", base_path));
-            btn.spawn(ImageBundle {
-                image: UiImage::new(icon),
-                style: img_style.clone(),
-                ..Default::default()
-            });
+            btn.spawn((ImageNode::new(icon), img_style.clone()));
         })
         .id();
 
@@ -336,34 +332,26 @@ fn add_world_item(
         ))
         .with_children(|btn| {
             let icon = asset_server.load(format!("{}/graphics/trash.png", base_path));
-            btn.spawn(ImageBundle {
-                image: UiImage::new(icon),
-                style: img_style.clone(),
-                ..Default::default()
-            });
+            btn.spawn((ImageNode::new(icon), img_style.clone()));
         })
         .id();
 
     let txt = commands
-        .spawn(TextBundle {
-            text: Text {
-                sections: vec![TextSection {
-                    value: name.clone() + "\n",
-                    style: TextStyle {
-                        font: asset_server.load("./fonts/RustCraftRegular-Bmg3.otf"),
-                        font_size: 20.,
-                        color: Color::WHITE,
-                    },
-                }],
-                ..Default::default()
-            },
-            style: Node {
+        .spawn((
+            Text::from_sections(vec![TextSection {
+                value: format!("{}\n", name),
+                style: TextStyle {
+                    font: asset_server.load("./fonts/RustCraftRegular-Bmg3.otf"),
+                    font_size: 20.,
+                    color: Color::WHITE,
+                },
+            }]),
+            Node {
                 display: Display::Flex,
                 flex_direction: FlexDirection::Column,
-                ..Default::default()
+                ..default()
             },
-            ..Default::default()
-        })
+        ))
         .id();
 
     commands

@@ -44,7 +44,7 @@ pub fn setup_hotbar(
                     padding: UiRect::ZERO,
                     border: UiRect::ZERO,
                     margin: UiRect::all(Val::Auto),
-                    ..Default::default()
+                    ..default()
                 },
                 BackgroundColor(Color::srgba(0.3, 0.3, 0.3, 0.3)),
                 GlobalZIndex(1),
@@ -65,25 +65,24 @@ pub fn setup_hotbar(
                             position_type: PositionType::Relative,
                             padding: UiRect::all(Val::Px(HOTBAR_PADDING)),
                             border: UiRect::all(Val::Px(HOTBAR_BORDER)),
-                            ..Default::default()
+                            ..default()
                         },
                     ),
                 ))
                 .with_children(|btn| {
-                    btn.spawn(TextBundle {
-                        text: Text::from_section(
+                    btn.spawn((
+                        Text::from_section(
                             "Test",
                             TextStyle {
                                 font_size: 15.,
-                                ..Default::default()
+                                ..default()
                             },
                         ),
-                        style: Node {
+                        Node {
                             position_type: PositionType::Absolute,
-                            ..Default::default()
+                            ..default()
                         },
-                        ..Default::default()
-                    });
+                    ));
                     btn.spawn((
                         ImageBundle {
                             z_index: ZIndex::Local(-1),
