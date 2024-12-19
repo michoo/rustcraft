@@ -82,19 +82,16 @@ pub fn multiplayer_menu_setup(
     commands
         .spawn((
             StateScoped(MenuState::Multi),
-            NodeBundle {
-                style: Node {
-                    width: Val::Vw(100.0),
-                    height: Val::Vh(100.0),
-                    align_items: AlignItems::Center,
-                    justify_content: JustifyContent::Center,
-                    flex_direction: FlexDirection::Column,
-                    padding: UiRect::horizontal(Val::Percent(20.)),
-                    row_gap: Val::Percent(2.),
-                    ..Default::default()
-                },
-                ..Default::default()
-            },
+            (Node {
+                width: Val::Vw(100.0),
+                height: Val::Vh(100.0),
+                align_items: AlignItems::Center,
+                justify_content: JustifyContent::Center,
+                flex_direction: FlexDirection::Column,
+                padding: UiRect::horizontal(Val::Percent(20.)),
+                row_gap: Val::Percent(2.),
+                ..default()
+            },),
             UiImage::new(background_image),
         ))
         .with_children(|root| {
@@ -110,9 +107,9 @@ pub fn multiplayer_menu_setup(
                 ..Default::default()
             });
 
-            root.spawn(NodeBundle {
-                border_color: BorderColor(BACKGROUND_COLOR),
-                style: Node {
+            root.spawn((
+                BorderColor(BACKGROUND_COLOR),
+                Node {
                     width: Val::Percent(100.),
                     height: Val::Percent(50.),
                     flex_direction: FlexDirection::Column,
@@ -120,20 +117,16 @@ pub fn multiplayer_menu_setup(
                     border: UiRect::all(Val::Px(2.)),
                     ..Default::default()
                 },
-                ..Default::default()
-            })
+            ))
             .with_children(|w| {
                 w.spawn((
-                    NodeBundle {
-                        style: Node {
-                            flex_direction: FlexDirection::Column,
-                            align_items: AlignItems::Center,
-                            padding: UiRect::all(Val::Px(10.)),
-                            row_gap: Val::Px(10.),
-                            ..Default::default()
-                        },
+                    (Node {
+                        flex_direction: FlexDirection::Column,
+                        align_items: AlignItems::Center,
+                        padding: UiRect::all(Val::Px(10.)),
+                        row_gap: Val::Px(10.),
                         ..Default::default()
-                    },
+                    },),
                     ScrollingList { position: 0. },
                     ServerList {
                         servers: HashMap::new(),
@@ -181,12 +174,11 @@ pub fn multiplayer_menu_setup(
                 ));
 
                 wrapper.spawn((
-                    NodeBundle {
-                        border_color: BorderColor(BACKGROUND_COLOR),
-                        background_color: BackgroundColor(Color::BLACK),
-                        style: btn_style.clone(),
-                        ..Default::default()
-                    },
+                    (
+                        btn_style.clone(),
+                        BorderColor(BACKGROUND_COLOR),
+                        BackgroundColor(Color::BLACK),
+                    ),
                     TextInputBundle {
                         settings: TextInputSettings {
                             retain_on_submit: true,
@@ -292,36 +284,22 @@ pub fn add_server_item(
     let play_btn = commands
         .spawn((
             MultiplayerButtonAction::Connect(server),
-            ButtonBundle {
-                style: btn_style.clone(),
-                ..Default::default()
-            },
+            (Button, btn_style.clone()),
         ))
         .with_children(|btn| {
             let icon = asset_server.load("./graphics/play.png");
-            btn.spawn(ImageBundle {
-                image: UiImage::new(icon),
-                style: img_style.clone(),
-                ..Default::default()
-            });
+            btn.spawn((ImageNode::new(icon), img_style.clone()));
         })
         .id();
 
     let delete_btn = commands
         .spawn((
             MultiplayerButtonAction::Delete(server),
-            ButtonBundle {
-                style: btn_style.clone(),
-                ..Default::default()
-            },
+            (Button, btn_style.clone()),
         ))
         .with_children(|btn| {
             let icon = asset_server.load("./graphics/trash.png");
-            btn.spawn(ImageBundle {
-                image: UiImage::new(icon),
-                style: img_style.clone(),
-                ..Default::default()
-            });
+            btn.spawn((ImageNode::new(icon), img_style.clone()));
         })
         .id();
 
@@ -359,9 +337,9 @@ pub fn add_server_item(
 
     commands
         .entity(server)
-        .push_children(&[play_btn, delete_btn, txt]);
+        .add_children(&[play_btn, delete_btn, txt]);
 
-    commands.entity(list_entity).push_children(&[server]);
+    commands.entity(list_entity).add_children(&[server]);
 
     list.servers.insert(
         server,
