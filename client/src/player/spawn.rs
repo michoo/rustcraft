@@ -103,7 +103,6 @@ pub fn spawn_player(
             Name::new("Player"),
         ));
 
-
         if is_current_player {
             target_server.state = TargetServerState::FullyReady;
             entity.insert(CurrentPlayerMarker {});

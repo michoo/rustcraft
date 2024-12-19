@@ -1,5 +1,7 @@
 use bevy::prelude::*;
-use bevy_renet::netcode::{ClientAuthentication, NetcodeClientPlugin, NetcodeClientTransport, NetcodeTransportError};
+use bevy_renet::netcode::{
+    ClientAuthentication, NetcodeClientPlugin, NetcodeClientTransport, NetcodeTransportError,
+};
 use bevy_renet::{renet::RenetClient, RenetClientPlugin};
 use rand::Rng;
 use shared::{get_shared_renet_config, GameServerConfig};

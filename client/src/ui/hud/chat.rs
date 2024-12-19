@@ -64,20 +64,18 @@ pub fn setup_chat(
         .with_children(|root| {
             root.spawn((
                 ChatDisplay,
-                (
-                    Node {
-                        display: Display::Flex,
-                        flex_direction: FlexDirection::Column,
-                        justify_content: JustifyContent::End,
-                        column_gap: Val::Px(0.),
-                        overflow: Overflow {
-                            x: OverflowAxis::Visible,
-                            y: OverflowAxis::Hidden,
-                        },
-                        width: Val::Percent(100.),
-                        ..default()
+                (Node {
+                    display: Display::Flex,
+                    flex_direction: FlexDirection::Column,
+                    justify_content: JustifyContent::End,
+                    column_gap: Val::Px(0.),
+                    overflow: Overflow {
+                        x: OverflowAxis::Visible,
+                        y: OverflowAxis::Hidden,
                     },
-                ),
+                    width: Val::Percent(100.),
+                    ..default()
+                },),
             ))
             .with_children(|d| {
                 // DO NOT REMOVE !!!
@@ -87,12 +85,10 @@ pub fn setup_chat(
 
             root.spawn((
                 ChatInput,
-                (
-                    Node {
-                        width: Val::Percent(100.),
-                        ..default()
-                    },
-                ),
+                (Node {
+                    width: Val::Percent(100.),
+                    ..default()
+                },),
                 bevy_simple_text_input::TextInputBundle {
                     placeholder: TextInputPlaceholder {
                         value: "Send a message...".to_string(),
@@ -109,7 +105,6 @@ pub fn setup_chat(
             ));
         });
 }
-
 
 pub fn render_chat(
     resources: (
@@ -223,7 +218,7 @@ pub fn render_chat(
                 ))
                 .id();
 
-            commands.entity(parent).push_children(&[msg]);
+            commands.entity(parent).add_children(&[msg]);
         }
 
         // Prevents too much messages from building up on screen

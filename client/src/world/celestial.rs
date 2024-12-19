@@ -114,7 +114,7 @@ pub fn setup_main_lighting(
 
     commands
         .entity(celestial_root)
-        .push_children(&[sun_light, moon_light]);
+        .add_children(&[sun_light, moon_light]);
 
     commands.entity(player.single()).add_child(celestial_root);
 }

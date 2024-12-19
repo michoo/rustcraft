@@ -72,7 +72,6 @@ pub fn setup_inventory(
         ))
         .id();
 
-
     let inventory_title = commands
         .spawn(TextBundle {
             text: Text::from_section(
@@ -206,9 +205,9 @@ pub fn setup_inventory(
 
     commands
         .entity(dialog)
-        .push_children(&[inventory_title, inventory_grid]);
+        .add_children(&[inventory_title, inventory_grid]);
 
     commands
         .entity(root)
-        .push_children(&[dialog, floating_stack]);
+        .add_children(&[dialog, floating_stack]);
 }

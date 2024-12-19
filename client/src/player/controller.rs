@@ -201,7 +201,7 @@ pub fn player_movement_system(
         }
     }
 
-    let material_handle = &material_handle.handle; 
+    let material_handle = &material_handle.handle;
     match *view_mode {
         ViewMode::FirstPerson => {
             // make player transparent
